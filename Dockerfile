@@ -3,10 +3,6 @@ FROM golang:1.11-alpine AS build
 ENV DISTRIBUTION_DIR /go/src/github.com/docker/distribution
 ENV BUILDTAGS include_oss include_gcs
 
-ARG GOOS=linux
-ARG GOARCH=amd64
-ARG GOARM=6
-
 RUN set -ex \
     && apk add --no-cache make git file
 
