@@ -673,7 +673,7 @@ func (d *driver) List(ctx context.Context, opath string) ([]string, error) {
 				Prefix:            aws.String(d.s3Path(path)),
 				Delimiter:         aws.String("/"),
 				MaxKeys:           aws.Int64(listMax),
-				ContinuationToken: resp.ContinuationToken,
+				ContinuationToken: resp.NextContinuationToken,
 			})
 			if err != nil {
 				return nil, err
@@ -834,7 +834,7 @@ ListLoop:
 			})
 		}
 
-		listObjectsInput.ContinuationToken = resp.ContinuationToken
+		listObjectsInput.ContinuationToken = resp.NextContinuationToken
 
 		// from the s3 api docs, IsTruncated "specifies whether (true) or not (false) all of the results were returned"
 		// if everything has been returned, break
