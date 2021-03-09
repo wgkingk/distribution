@@ -68,7 +68,7 @@ health:
   storagedriver:
     enabled: false
   http:
-    - uri: http://127.0.0.1:9000/minio/health/ready
+    - uri: REGISTRY_STORAGE_S3_REGIONENDPOINT/minio/health/ready
       statuscode: 200
       timeout: 3s
       interval: 3s

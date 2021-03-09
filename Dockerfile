@@ -11,9 +11,14 @@ COPY . $DISTRIBUTION_DIR
 RUN CGO_ENABLED=0 make PREFIX=/go clean binaries && file ./bin/registry | grep "statically linked"
 
 FROM alpine
+
+COPY --from=build /go/src/github.com/docker/distribution/bin/registry /bin/registry
 COPY cmd/registry/config-dev.yml /etc/docker/registry/config.yml
 COPY cmd/registry/config-alauda.yml /etc/docker/registry/config-alauda.yml
-COPY --from=build /go/src/github.com/docker/distribution/bin/registry /bin/registry
+COPY cmd/registry/init.sh /init.sh
+
+RUN chmod +x /init.sh
+
 VOLUME ["/var/lib/registry"]
 EXPOSE 5000
 ENTRYPOINT ["registry"]
